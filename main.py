@@ -18,3 +18,23 @@ f"mohammad {lastName}" # str interpolation
 input() # Receives input from the user. 
 # The input it receives is a string.
 round(5.555, 2) # Rounding up
+# ----------------------------------------------------------------------
+rank = int(input())
+if(rank == 1):
+    print("Gold")
+elif(rank == 2):
+    print("Silver")
+elif(rank == 3):
+    print("Bronze")
+else:
+    print("none")
+# ----------------------------------------------------------------------
+print("Gold")if(rank == 1) else print("none") #else-if short hand
+# the == operator => values are equal
+# the is operator => point to the same object
+obj_1 = ["A"]
+obj_2 = list(obj_1)
+obj_1 == obj_2 # true
+obj_1 is obj_2 # false
+# ----------------------------------------------------------------------
+# comparison operators 1.== 2.!= 3.> 4.< 5.>= 6.<=
