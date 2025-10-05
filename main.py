@@ -38,3 +38,6 @@ obj_1 == obj_2 # true
 obj_1 is obj_2 # false
 # ----------------------------------------------------------------------
 # comparison operators 1.== 2.!= 3.> 4.< 5.>= 6.<=
+# logical operators 1.and 2.or 3.not
+# import random print(random.randint(0,3))
+# lower()
