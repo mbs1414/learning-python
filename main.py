@@ -85,3 +85,20 @@ while index in list_1:
     print(item)
     index += 1
 # ----------------------------------------------------------------------
+list_1 = ['python', 'react']
+list_2 = ['vue', 'nuxt']
+list_1.append('JS') # add one item to end of list
+list_1.extend(list_2) # add list's child to another list
+list_1.insert(1,'next') # add based on index
+# ----------------------------------------------------------------------
+# list_1.clear() # remove whole list
+list_1.pop() # remove and return last item
+list_1.pop(0) # remove and return item by index
+list_1.remove('vue') # remove item by str
+# ----------------------------------------------------------------------
+list_1.index('JS') # finding index
+list_1.count('python') # تعداد یک ایتم 
+list_1.reverse()
+list_1.sort() # Sort the list in ascending order and return None.
+", ".join(list_1) # Example: '.'.join(['ab', 'pq', 'rs']) -> 'ab.pq.rs'
+print(list_1)
