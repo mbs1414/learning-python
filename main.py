@@ -102,3 +102,21 @@ list_1.reverse()
 list_1.sort() # Sort the list in ascending order and return None.
 ", ".join(list_1) # Example: '.'.join(['ab', 'pq', 'rs']) -> 'ab.pq.rs'
 print(list_1)
+# ----------------------------------------------------------------------
+list_1 = [1,2,3,4,5]
+# list_1[start:end:step]
+# list_1[1:3] # [1, 2]
+# list_1[1:5:2] # [2, 4]
+# list_1[2:] # [3, 4, 5]
+# list_1[:3] # [1, 2]
+# list_1[::2] # [2, 4]
+list_2 = list_1[:] # یک کپی از لیست ایجاد میکند
+print(list_1 is list_2) # وقتی یک کپی از لیست گرفته میشود با خود لیبست برابر است (==) اما به یک نقطه از حافظه اشاره نمیکند
+# comprehension list
+list_2 = [num * 2 for num in list_1]
+# ----------------------------------------------------------------------
+dict_1 = dict(name = 'mohammad') # {"name": "mohammad"}
+dict_2 = {"name": "A", "age": 24, "isOnline": True}
+print([value for value in dict_2.values()]) # ['A', 24, True]
+print([key for key in dict_2.keys()]) # ['name', 'age', 'isOnline']
+print([item for item in dict_2.items()]) # [('name', 'A'), ('age', 24), ('isOnline', True)]
