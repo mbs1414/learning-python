@@ -128,4 +128,6 @@ dict_1.clear() # remove all item inside dictionary
 dict_1.copy()
 dict_3 = {}.fromkeys(["name"], "unknown") # => {"name": "unknwon"} using it for generating default values
 dict_1.get("name") # => dict["name"] خروجی get به صورت None هست و پروژه را دچار مشکل نمیکند 
-
+dict_1.pop("name") # remove and return key and value from dictionary
+dict_1.popitem() # remove last key and value from dictionary
+dict_1.update({"name": "Liza"}) # add dictionary
