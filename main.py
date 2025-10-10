@@ -120,3 +120,12 @@ dict_2 = {"name": "A", "age": 24, "isOnline": True}
 print([value for value in dict_2.values()]) # ['A', 24, True]
 print([key for key in dict_2.keys()]) # ['name', 'age', 'isOnline']
 print([item for item in dict_2.items()]) # [('name', 'A'), ('age', 24), ('isOnline', True)]
+print("name" in dict_1) # check if the key exist in dictionary
+print("mohammad" in dict_1.values()) # check if the value exist in dictionary
+# ----------------------------------------------------------------------
+# dictionary methods
+dict_1.clear() # remove all item inside dictionary
+dict_1.copy()
+dict_3 = {}.fromkeys(["name"], "unknown") # => {"name": "unknwon"} using it for generating default values
+dict_1.get("name") # => dict["name"] خروجی get به صورت None هست و پروژه را دچار مشکل نمیکند 
+
