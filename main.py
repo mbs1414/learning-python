@@ -131,3 +131,7 @@ dict_1.get("name") # => dict["name"] خروجی get به صورت None هست و
 dict_1.pop("name") # remove and return key and value from dictionary
 dict_1.popitem() # remove last key and value from dictionary
 dict_1.update({"name": "Liza"}) # add dictionary
+# comprehension dictionary
+dict_4 = dict(first = 1, second = 2, third = 3)
+squaredNumbers = {key: value ** value for key, value in dict_4.items()}
+{num : ("even" if num % 2 == 0 else "odd") for num in [1, 2, 3, 4, 5]}
