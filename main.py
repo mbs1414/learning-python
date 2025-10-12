@@ -150,3 +150,10 @@ print(location[(35.67, 45.78)])
 tuple_1.count(1)
 tuple_1.index(5)
 # slicing in list is available in tuple
+# ----------------------------------------------------------------------
+set_1 = {1, 2, 3, 4} # تکرار در ست معنا ندارد
+# بر اساس ایندکس به ایتم ها دسترسی ندارم
+# هیچ ترتیب خاصی برای ست ها وجود ندارد
+# we can use loops to hava access to the items in set 
+courses = ['PY', 'JS']
+courses_set = set(courses )
