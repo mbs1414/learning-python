@@ -135,3 +135,18 @@ dict_1.update({"name": "Liza"}) # add dictionary
 dict_4 = dict(first = 1, second = 2, third = 3)
 squaredNumbers = {key: value ** value for key, value in dict_4.items()}
 {num : ("even" if num % 2 == 0 else "odd") for num in [1, 2, 3, 4, 5]}
+# ----------------------------------------------------------------------
+# tuple
+tuple_1 = (1, 2, 3) # immutable list
+print(tuple_1[0])
+print(3 in tuple_1)
+# why we use tuple??? 1. faster than list 2.use less memory 3.immutable list4
+print(tuple([1, 2, 3]))
+
+location = {
+    (35.67, 45.78): "Tehran"
+}
+print(location[(35.67, 45.78)])
+tuple_1.count(1)
+tuple_1.index(5)
+# slicing in list is available in tuple
