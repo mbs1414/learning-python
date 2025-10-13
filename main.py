@@ -156,4 +156,19 @@ set_1 = {1, 2, 3, 4} # تکرار در ست معنا ندارد
 # هیچ ترتیب خاصی برای ست ها وجود ندارد
 # we can use loops to hava access to the items in set 
 courses = ['PY', 'JS']
-courses_set = set(courses )
+courses_set = set(courses)
+list((1, 2, 3)) # [1,2,3]
+numbers_set = {1,2,3}
+numbers_set.add(5) # اگر عدد تکراری باشد به ست اضافه نمیشود
+numbers_set.remove(2)
+numbers_set.discard(5) # تنها تفاوت discard و remove این است که discard زمانی که ایتم مورد نظر در ست نباشد خطا نمیدهد
+copyNumbers = numbers_set.copy()
+numbers_set.clear()
+PY = ["mohammad", "reza"]
+JS = ["reza", "nader"]
+print(PY | JS) # ["mohammad", "nader"] اجتماع
+print(PY & JS) # ["mohammad", "nader"] اشتراک
+# ----------------------------------------------------------------------
+def printShit(shit):
+    print(shit)
+printShit('shit')
