@@ -169,6 +169,40 @@ JS = ["reza", "nader"]
 print(PY | JS) # ["mohammad", "nader"] اجتماع
 print(PY & JS) # ["mohammad", "nader"] اشتراک
 # ----------------------------------------------------------------------
+for item in ["PY", "JS"]:
+    print(item, end="-") # PY-JS-
+    print(item, sep="-") # PY-JS
+# ----------------------------------------------------------------------
+response_code = 201
+match response_code:
+    case 200:
+        print("OK")
+    case 201:
+        print("fuck")
+# ----------------------------------------------------------------------
 def printShit(shit):
     print(shit)
-printShit('shit')
+
+def add (number):
+    return number + 6
+# به متغیرهایی که برای ورودی فانکشن ها تعریف میشن => پارامتر
+# مقادیری که برای ورودی فانکشن در نطر میگیریم => آرگومان
+
+def hi(word = "hi"): # default value
+    print(word)
+hi(word= "bitch") # مشخص مقدار ورودی
+
+# *args
+def plus(*args):
+    total = 0
+    for arg in args:
+        total += arg
+    print(total)
+plus(1,2,3,4,4,5)
+
+# ** kwargs
+def kwargs(**kwargs):
+    print(kwargs)
+
+kwargs(name="mohammad") # {'name': 'mohammad'}
+
