@@ -206,3 +206,13 @@ def kwargs(**kwargs):
 
 kwargs(name="mohammad") # {'name': 'mohammad'}
 
+def plus (num1) : print(num1)
+# anonymous function 
+short_version = lambda num : print(num) # مقدار خروجی را به صورت پیشفرض return میکند
+short_version(5)
+# ----------------------------------------------------------------------
+list_1 = [1,2,3,4]
+print(list(map(lambda num: num * num, list_1)))
+print(list(filter(lambda num: num % 2 == 0, list_1)))
+all() # یک لیست به عنوان ورودی میگیرد و truthy و falthy رو بررسی مبکند اگر تمام ایتم ها درست بود true برمی گردونه
+any() # اگر تنها یکی از ایتم ها درست بود true برمیگردونه
