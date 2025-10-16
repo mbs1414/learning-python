@@ -216,3 +216,27 @@ print(list(map(lambda num: num * num, list_1)))
 print(list(filter(lambda num: num % 2 == 0, list_1)))
 all() # یک لیست به عنوان ورودی میگیرد و truthy و falthy رو بررسی مبکند اگر تمام ایتم ها درست بود true برمی گردونه
 any() # اگر تنها یکی از ایتم ها درست بود true برمیگردونه
+# ----------------------------------------------------------------------
+list_1 = [1,2,3,4]
+list_2 = [5,6,7,8]
+print(list(zip(list_1,list_2))) # [(1, 5), (2, 6), (3, 7), (4, 8)]
+print(dict(zip(list_1,list_2))) # {1: 5, 2: 6, 3: 7, 4: 8}
+# وقتی میای literate میکنی ایتم های درون زیپ ابجکت رو دیگه ایتم های اون از بین میرن و برای بار دوم نمیشه اون داخل لیست نوشت
+print(list(zip(*[(1, 5), (2, 6), (3, 7), (4, 8)]))) # [(1, 2, 3, 4), (5, 6, 7, 8)]
+# ----------------------------------------------------------------------
+# syntaz error
+# name error
+# type error
+# value error
+# key error
+# attribute error
+raise IndexError('index error')
+
+try:
+    pass
+except:
+    pass
+else:
+    pass
+finally:
+    pass
