@@ -240,3 +240,11 @@ else:
     pass
 finally:
     pass
+# ----------------------------------------------------------------------
+import pdb
+pdb.set_trace()
+# commom pdb commands
+# 1. l => your commands list
+# 2. n => next line
+# 3. c =>continue 
+# 4. p print
