@@ -248,3 +248,14 @@ pdb.set_trace()
 # 2. n => next line
 # 3. c =>continue 
 # 4. p print
+# ----------------------------------------------------------------------
+# import random as r 
+import random
+from random import randint, choices
+import circle
+print(circle.calculate_circle_area(5))
+import termcolor
+print(termcolor.colored('python course', color='blue', attrs=["blink"]))
+# help(termcolor)
+print(__name__) # main
+# وقتی یک ماژولی ایمپورت میشود هر دستوری که داخل ماژول باشد در ابتدا اجرا میشود
