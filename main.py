@@ -259,3 +259,16 @@ print(termcolor.colored('python course', color='blue', attrs=["blink"]))
 # help(termcolor)
 print(__name__) # main
 # وقتی یک ماژولی ایمپورت میشود هر دستوری که داخل ماژول باشد در ابتدا اجرا میشود
+# ----------------------------------------------------------------------
+# Encasulation&Abstraction
+# class Example:
+#     pass
+# attr and functionallity رفتارها و مشخصه های خودشون رو دارن
+class User:
+    name = 'mohammad'
+    familyName = 'babakhani'
+    def showFullName(self):
+        return f"{self.name} {self.familyName}"
+user_1 = User()
+print(user_1.name)
+print(user_1.showFullName())
