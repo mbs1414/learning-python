@@ -272,3 +272,14 @@ class User:
 user_1 = User()
 print(user_1.name)
 print(user_1.showFullName())
+# encapsulating یک ماهیت کل رو جز به جز کنیم
+# abstraction در پس زمینه نمیبینی چه اتفاقی می افتد
+# دو اصل مهم در شی گرایی: کلاس و ابجکت
+class User_1:
+    name = "mohammad"
+    def __init__(self,userName):
+        self.name = userName
+    def showName(self):
+        return self.name
+Ali = User_1('Ali')
+print(Ali.showName())
