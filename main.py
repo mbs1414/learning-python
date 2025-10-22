@@ -259,34 +259,187 @@ print(__name__)  # __main__
 # ----------------------------------------------------------------------
 
 # 16. Object-Oriented Programming (OOP)
-class User:
-    name = "mohammad"
-    familyName = "babakhani"
-    
-    def showFullName(self):
-        return f"{self.name} {self.familyName}"
 
-user_1 = User()
-print(user_1.showFullName())  # mohammad babakhani
-
-class User_1:
-    def __init__(self, userName):
-        self.name = userName
-    
-    def showName(self):
-        return self.name
-
-Ali = User_1("Ali")
-print(Ali.showName())  # Ali
-
+# Protected and Private Attributes
+# ---------------------------------------
 class Test:
-    _email = "protected"
-    __email = "private"
+    _email = "protected"   # protected attribute
+    __email = "private"    # private attribute (will be name-mangled)
 
 print(dir(Test))
-# Output includes: 
+# 🔹 Output: list of all class attributes and methods
 # ['_Test__email', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', 
 # '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', 
 # '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', 
 # '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', 
 # '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_email']
+# 🟢 Note: private variable appears as _Test__email (name mangling)
+
+# ---------------------------------------
+# Adding attributes and methods dynamically
+# ---------------------------------------
+class Fruits:
+    fruit = "apple"
+
+orange = Fruits()
+orange.otherFruits = "orange"   # dynamically adding a new attribute to an instance
+
+def sayHi(self):
+    print("Hi")
+
+import types
+orange.sayHi = types.MethodType(sayHi, orange)  # dynamically adding a method
+
+orange.sayHi()
+# 🔹 Output:
+# Hi
+
+# ---------------------------------------
+# __repr__ and object representation
+# ---------------------------------------
+class Sports:
+    def __init__(self, sportName):
+        self.name = sportName
+
+    def __repr__(self):
+        return self.name
+
+football = Sports("Football")
+print(football)
+# 🔹 Output: Football (because __repr__ returns the name)
+
+# Without __repr__, it would print something like:
+# <__main__.Sports object at 0x00000238E4F8A550>
+
+# ---------------------------------------
+# Inheritance
+# ---------------------------------------
+class Basketball(Sports):  # inherits from Sports
+    pass
+
+game = Basketball("Basketball")
+print(game)
+# 🔹 Output: Basketball
+
+# ---------------------------------------
+# Using @classmethod
+# ---------------------------------------
+class Car:
+    wheels = 4
+
+    @classmethod # means the method belongs to the class itself, not to an instance.
+    def set_wheels(cls, number):
+        Car.wheels = number
+
+print(Car.wheels)
+# 🔹 Output: 4
+
+Car.set_wheels(6)
+print(Car.wheels)
+# 🔹 Output: 6 (the class variable changed for all instances)
+
+# ---------------------------------------
+# Using @property
+# ---------------------------------------
+class User:
+    def __init__(self, name):
+        self._name = name
+
+    @property
+    def name(self):         # getter
+        return self._name
+
+    def name(self, newName):  # this should be a setter using @name.setter, but it’s incorrect
+        self._name = newName
+
+User.name = "Alex"
+print(User.name)
+# 🔹 Output: Alex
+# ⚠️ Note: name is now just a class variable, not a property, because setter was not declared properly.
+
+# ---------------------------------------
+# Using super() and inheritance constructor
+# ---------------------------------------
+class Name:
+    def __init__(self, name):
+        self.name = name
+
+class FullName(Name):
+    def __init__(self, name, familyName):
+        super().__init__(name)    # call parent __init__
+        self.familyName = familyName
+
+person = FullName("Ali", "Rezaei")
+print(person.name, person.familyName)
+# 🔹 Output: Ali Rezaei
+
+# ---------------------------------------
+# Multiple Inheritance Example
+# ---------------------------------------
+
+class Animal:
+    def eat(self):
+        print("Animal is eating")
+
+class Flyable:
+    def fly(self):
+        print("This creature can fly")
+
+# Bird inherits from both Animal and Flyable
+class Bird(Animal, Flyable):
+    def chirp(self):
+        print("Bird is chirping")
+
+parrot = Bird()
+
+# Inherited from Animal
+parrot.eat()
+# 🔹 Output: Animal is eating
+
+# Inherited from Flyable
+parrot.fly()
+# 🔹 Output: This creature can fly
+
+# Defined in Bird itself
+parrot.chirp()
+# 🔹 Output: Bird is chirping
+
+
+# ---------------------------------------
+# Method Resolution Order (MRO)
+# ---------------------------------------
+print(Bird.__mro__)
+# 🔹 Output: (<class '__main__.Bird'>, <class '__main__.Animal'>, <class '__main__.Flyable'>, <class 'object'>)
+# MRO defines the order in which Python looks for methods in multiple inheritance.
+
+
+# ---------------------------------------
+# isinstance() and issubclass()
+# ---------------------------------------
+
+# isinstance(object, class)
+print(isinstance(parrot, Bird))
+# 🔹 Output: True
+
+print(isinstance(parrot, Animal))
+# 🔹 Output: True (because Bird inherits from Animal)
+
+print(isinstance(parrot, Flyable))
+# 🔹 Output: True
+
+print(isinstance(parrot, object))
+# 🔹 Output: True (everything in Python is derived from object)
+
+
+# issubclass(child_class, parent_class)
+print(issubclass(Bird, Animal))
+# 🔹 Output: True
+
+print(issubclass(Bird, Flyable))
+# 🔹 Output: True
+
+print(issubclass(Bird, object))
+# 🔹 Output: True
+
+print(issubclass(Animal, Flyable))
+# 🔹 Output: False (Animal does not inherit from Flyable)
