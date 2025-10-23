@@ -443,3 +443,64 @@ print(issubclass(Bird, object))
 
 print(issubclass(Animal, Flyable))
 # 🔹 Output: False (Animal does not inherit from Flyable)
+
+# ---------------------------------------
+# Polymorphism Example
+# ---------------------------------------
+
+class Animal:
+    def make_sound(self):
+        # This method is meant to be overridden by subclasses
+        raise NotImplementedError("Subclasses must implement this method")
+
+class Dog(Animal):
+    def make_sound(self):
+        return "Woof!"
+
+class Cat(Animal):
+    def make_sound(self):
+        return "Meow!"
+
+class Cow(Animal):
+    def make_sound(self):
+        return "Moo!"
+
+# Different objects, same method name → different behavior
+animals = [Dog(), Cat(), Cow()]
+
+for animal in animals:
+    print(animal.make_sound())
+# 🔹 Output:
+# Woof!
+# Meow!
+# Moo!
+
+
+# ---------------------------------------
+# Demonstrating NotImplementedError
+# ---------------------------------------
+
+class Vehicle:
+    def start_engine(self):
+        # This is a placeholder for subclasses
+        raise NotImplementedError("Subclasses must implement start_engine()")
+
+class Car(Vehicle):
+    def start_engine(self):
+        return "Car engine started"
+
+class Bike(Vehicle):
+    pass  # No start_engine() implementation
+
+# Car works fine
+car = Car()
+print(car.start_engine())
+# 🔹 Output: Car engine started
+
+# Bike will raise an error
+bike = Bike()
+try:
+    print(bike.start_engine())
+except NotImplementedError as e:
+    print(f"Error: {e}")
+# 🔹 Output: Error: Subclasses must implement start_engine()
