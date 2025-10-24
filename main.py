@@ -504,3 +504,203 @@ try:
 except NotImplementedError as e:
     print(f"Error: {e}")
 # 🔹 Output: Error: Subclasses must implement start_engine()
+
+# ---------------------------------------
+# Dunder (Double Underscore) Methods
+# Example: __add__
+# ---------------------------------------
+
+# Dunder methods are special methods that start and end with double underscores.
+# They allow custom behavior for built-in operators and functions.
+# Example: __add__, __len__, __str__, __eq__, __lt__, etc.
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    # Define behavior for the + operator
+    def __add__(self, other):
+        # Return a new Point object that adds x and y values
+        return Point(self.x + other.x, self.y + other.y)
+
+    # Define string representation for printing
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+# Create two Point objects
+p1 = Point(3, 5)
+p2 = Point(2, 4)
+
+# Use + operator → calls __add__ method automatically
+p3 = p1 + p2
+print(p3)
+# 🔹 Output: (5, 9)
+
+# Same result if called manually:
+print(p1.__add__(p2))
+# 🔹 Output: (5, 9)
+
+# ---------------------------------------
+# Explanation
+# ---------------------------------------
+# When you write p1 + p2, Python internally does this:
+#     p1.__add__(p2)
+#
+# This is called "Operator Overloading" — redefining the meaning of an operator
+# for user-defined objects.
+
+
+# ---------------------------------------
+# Iterable, Iterator, Iteration
+# ---------------------------------------
+
+# ✅ Iterable: an object capable of returning its elements one at a time.
+# Examples: list, tuple, string, set, dictionary, etc.
+
+numbers = [10, 20, 30]
+print(numbers)  
+# 🔹 Output: [10, 20, 30]
+
+# You can loop through an iterable with a for loop
+for num in numbers:
+    print(num)
+# 🔹 Output:
+# 10
+# 20
+# 30
+
+
+# ---------------------------------------
+# ✅ Iterator: an object that remembers its state during iteration
+# You can create an iterator from an iterable using iter()
+# ---------------------------------------
+
+iterator = iter(numbers)  # Convert list (iterable) → iterator
+
+print(iterator)
+# 🔹 Output: <list_iterator object at 0x...>
+
+# ---------------------------------------
+# ✅ next() function: returns the next item from the iterator
+# ---------------------------------------
+
+print(next(iterator))  # 🔹 Output: 10
+print(next(iterator))  # 🔹 Output: 20
+print(next(iterator))  # 🔹 Output: 30
+
+# Once the iterator is exhausted, calling next() again raises StopIteration
+try:
+    print(next(iterator))
+except StopIteration:
+    print("No more items in iterator.")
+# 🔹 Output: No more items in iterator.
+
+
+# ---------------------------------------
+# ✅ Iteration process manually (behind the scenes of a for loop)
+# ---------------------------------------
+
+names = ["Ali", "Reza", "Sara"]
+it = iter(names)
+
+while True:
+    try:
+        item = next(it)
+        print(item)
+    except StopIteration:
+        break
+# 🔹 Output:
+# Ali
+# Reza
+# Sara
+
+
+# ---------------------------------------
+# ✅ Example: Custom Iterator Class
+# ---------------------------------------
+
+class CountUpTo:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 1
+
+    def __iter__(self):
+        # The __iter__ method returns the iterator object itself
+        return self
+
+    def __next__(self):
+        # Defines what happens when next() is called
+        if self.current <= self.limit:
+            value = self.current
+            self.current += 1
+            return value
+        else:
+            raise StopIteration  # Signals that iteration is finished
+
+counter = CountUpTo(3)
+for num in counter:
+    print(num)
+# 🔹 Output:
+# 1
+# 2
+# 3
+
+# ---------------------------------------
+# Custom Iterator Example
+# ---------------------------------------
+
+class EvenNumbers:
+    def __init__(self, limit):
+        # Initialize starting number and limit
+        self.limit = limit
+        self.number = 0
+
+    def __iter__(self):
+        # Returns the iterator object itself
+        return self
+
+    def __next__(self):
+        # Generate the next even number
+        if self.number <= self.limit:
+            result = self.number
+            self.number += 2
+            return result
+        else:
+            # StopIteration signals that iteration is finished
+            raise StopIteration
+
+
+# ---------------------------------------
+# Using the custom iterator
+# ---------------------------------------
+
+evens = EvenNumbers(10)
+
+for num in evens:
+    print(num)
+# 🔹 Output:
+# 0
+# 2
+# 4
+# 6
+# 8
+# 10
+
+
+# ---------------------------------------
+# Using next() manually
+# ---------------------------------------
+
+evens = EvenNumbers(6)
+iterator = iter(evens)
+
+print(next(iterator))  # 🔹 0
+print(next(iterator))  # 🔹 2
+print(next(iterator))  # 🔹 4
+print(next(iterator))  # 🔹 6
+try:
+    print(next(iterator))
+except StopIteration:
+    print("Iteration finished!")
+# 🔹 Output: Iteration finished!
