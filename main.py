@@ -704,3 +704,414 @@ try:
 except StopIteration:
     print("Iteration finished!")
 # 🔹 Output: Iteration finished!
+
+# ---------------------------------------
+# Generator Function Example
+# ---------------------------------------
+
+def count_up_to(limit):
+    number = 1
+    while number <= limit:
+        yield number  # 'yield' turns this into a generator
+        number += 1
+
+counter = count_up_to(3)
+
+print(next(counter))  # 🔹 Output: 1
+print(next(counter))  # 🔹 Output: 2
+print(next(counter))  # 🔹 Output: 3
+
+try:
+    print(next(counter))
+except StopIteration:
+    print("No more numbers!")
+# 🔹 Output: No more numbers!
+
+# Or simply iterate:
+for num in count_up_to(5):
+    print(num)
+# 🔹 Output: 1 2 3 4 5
+
+# ---------------------------------------
+# 1. Basic Decorator Example
+# ---------------------------------------
+
+# A decorator is a function that takes another function as an argument,
+# adds some functionality to it, and returns a new function.
+
+def my_decorator(func):
+    def wrapper():
+        print("Before the function runs")
+        func()
+        print("After the function runs")
+    return wrapper
+
+
+# Apply decorator manually
+def say_hello():
+    print("Hello!")
+
+decorated_func = my_decorator(say_hello)
+decorated_func()
+# 🔹 Output:
+# Before the function runs
+# Hello!
+# After the function runs
+
+
+# ---------------------------------------
+# 2. Using @ Syntax (Decorator Shortcut)
+# ---------------------------------------
+
+@my_decorator
+def greet():
+    print("Hi there!")
+
+greet()
+# 🔹 Output:
+# Before the function runs
+# Hi there!
+# After the function runs
+
+
+# ---------------------------------------
+# 3. Decorator with Arguments
+# ---------------------------------------
+
+def repeat_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Running the function twice:")
+        func(*args, **kwargs)
+        func(*args, **kwargs)
+    return wrapper
+
+@repeat_decorator
+def say_name(name):
+    print(f"My name is {name}")
+
+say_name("Mohammad")
+# 🔹 Output:
+# Running the function twice:
+# My name is Mohammad
+# My name is Mohammad
+
+
+# ---------------------------------------
+# 4. Decorator that Returns Function Results
+# ---------------------------------------
+
+def add_logging(func):
+    def wrapper(*args, **kwargs):
+        print(f"Calling function: {func.__name__}")
+        result = func(*args, **kwargs)
+        print(f"Result: {result}")
+        return result
+    return wrapper
+
+@add_logging
+def add(a, b):
+    return a + b
+
+sum_result = add(5, 3)
+# 🔹 Output:
+# Calling function: add
+# Result: 8
+# sum_result = 8
+
+
+# ---------------------------------------
+# 5. Multiple Decorators Example
+# ---------------------------------------
+
+def bold(func):
+    def wrapper():
+        return f"<b>{func()}</b>"
+    return wrapper
+
+def italic(func):
+    def wrapper():
+        return f"<i>{func()}</i>"
+    return wrapper
+
+@bold
+@italic
+def text():
+    return "Python"
+
+print(text())
+# 🔹 Output: <b><i>Python</i></b>
+# Note: decorators are applied from bottom to top (inside → out)
+
+
+# ---------------------------------------
+# 6. Using functools.wraps (Preserve Original Metadata)
+# ---------------------------------------
+
+from functools import wraps
+
+def info_logger(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print(f"Running {func.__name__} with arguments {args}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@info_logger
+def multiply(a, b):
+    """This function multiplies two numbers."""
+    return a * b
+
+print(multiply(3, 4))  # 🔹 Output: Running multiply with arguments (3, 4) → 12
+print(multiply.__name__)  # 🔹 Output: multiply (without wraps → "wrapper")
+print(multiply.__doc__)   # 🔹 Output: This function multiplies two numbers.
+
+
+# ---------------------------------------
+# Generator Comprehension
+# ---------------------------------------
+
+# A generator comprehension looks like a list comprehension,
+# but uses parentheses () instead of brackets [].
+# It creates a generator object that produces items one at a time — lazily.
+
+# ✅ Example 1: Basic generator comprehension
+gen = (num * 2 for num in range(5))
+
+print(gen)
+# 🔹 Output: <generator object <genexpr> at 0x...>
+
+# You can iterate over it using a for loop
+for value in gen:
+    print(value)
+# 🔹 Output:
+# 0
+# 2
+# 4
+# 6
+# 8
+
+
+# ---------------------------------------
+# ✅ Example 2: Using next() manually
+# ---------------------------------------
+
+gen = (n ** 2 for n in range(3))
+
+print(next(gen))  # 🔹 0
+print(next(gen))  # 🔹 1
+print(next(gen))  # 🔹 4
+
+# Once exhausted, next() raises StopIteration
+try:
+    print(next(gen))
+except StopIteration:
+    print("Generator is finished!")
+# 🔹 Output: Generator is finished!
+
+
+# ---------------------------------------
+# ✅ Example 3: Comparing List vs Generator
+# ---------------------------------------
+
+# List comprehension creates the entire list in memory
+nums_list = [x * 2 for x in range(1000000)]
+
+# Generator comprehension creates values one by one (lazy evaluation)
+nums_gen = (x * 2 for x in range(1000000))
+
+import sys
+print("List size:", sys.getsizeof(nums_list))
+print("Generator size:", sys.getsizeof(nums_gen))
+# 🔹 Output (approx):
+# List size: 9000112 bytes
+# Generator size: 104 bytes
+
+
+# ---------------------------------------
+# ✅ Example 4: Using with sum() or any() directly
+# ---------------------------------------
+
+# You can use generator comprehensions directly inside functions
+total = sum(x for x in range(5))
+print(total)
+# 🔹 Output: 10
+
+has_even = any(x % 2 == 0 for x in range(5))
+print(has_even)
+# 🔹 Output: True
+
+
+# ---------------------------------------
+# Decorators and @wraps
+# ---------------------------------------
+
+# A decorator is a function that takes another function as an argument
+# and returns a modified version of that function — usually adding extra functionality.
+
+# ---------------------------------------
+# ✅ Example 1: Basic Decorator
+# ---------------------------------------
+
+def my_decorator(func):
+    def wrapper():
+        print("Before the function runs")
+        func()
+        print("After the function runs")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# 🔹 Output:
+# Before the function runs
+# Hello!
+# After the function runs
+
+
+# ---------------------------------------
+# ✅ Example 2: Problem — Losing Metadata
+# ---------------------------------------
+# When you wrap a function manually, its __name__ and __doc__ are replaced by the wrapper’s.
+
+print(say_hello.__name__)  # 🔹 Output: wrapper  (not 'say_hello')
+
+
+# ---------------------------------------
+# ✅ Example 3: Fixing it with functools.wraps
+# ---------------------------------------
+
+from functools import wraps
+
+def my_decorator(func):
+    @wraps(func)  # This preserves metadata of the original function
+    def wrapper():
+        print("Before the function runs")
+        func()
+        print("After the function runs")
+    return wrapper
+
+@my_decorator
+def greet():
+    """This function greets the user."""
+    print("Hi there!")
+
+greet()
+# 🔹 Output:
+# Before the function runs
+# Hi there!
+# After the function runs
+
+print(greet.__name__)  # 🔹 Output: greet
+print(greet.__doc__)   # 🔹 Output: This function greets the user.
+
+
+# ---------------------------------------
+# ✅ Example 4: Decorator with Arguments
+# ---------------------------------------
+
+def repeat(n):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@repeat(3)
+def say_hi(name):
+    print(f"Hi, {name}!")
+
+say_hi("Mohammad")
+# 🔹 Output:
+# Hi, Mohammad!
+# Hi, Mohammad!
+# Hi, Mohammad!
+
+
+# ---------------------------------------
+# ✅ Example 5: Multiple Decorators
+# ---------------------------------------
+
+def bold(func):
+    @wraps(func)
+    def wrapper():
+        return "<b>" + func() + "</b>"
+    return wrapper
+
+def italic(func):
+    @wraps(func)
+    def wrapper():
+        return "<i>" + func() + "</i>"
+    return wrapper
+
+@bold
+@italic
+def text():
+    return "Hello!"
+
+print(text())
+# 🔹 Output: <b><i>Hello!</i></b>
+
+
+from functools import wraps  # keeps the original function’s metadata (like __name__, __doc__)
+
+# -----------------------------------------
+# 🔹 Decorator Factory Template
+# -----------------------------------------
+
+def decorator_factory(arg1, arg2):
+    """
+    This is a decorator factory.
+    It takes arguments (arg1, arg2) and returns a decorator function.
+    """
+
+    def actual_decorator(func):
+        """
+        This is the actual decorator that receives the function to be wrapped.
+        """
+
+        @wraps(func)  # keeps the function name and docstring intact
+        def wrapper(*args, **kwargs):
+            """
+            This is the wrapper function that replaces the original one.
+            You can run custom logic before and after calling the original function.
+            """
+
+            # --- Before the function runs ---
+            print(f"Decorator factory arguments: {arg1}, {arg2}")
+            print(f"Calling {func.__name__}() with args: {args}, kwargs: {kwargs}")
+
+            # --- Call the original function ---
+            result = func(*args, **kwargs)
+
+            # --- After the function runs ---
+            print(f"{func.__name__}() returned: {result}")
+
+            return result  # return the original function’s result
+
+        return wrapper  # return the wrapped function
+
+    return actual_decorator  # return the decorator
+
+# -----------------------------------------
+# 🔹 Using the Decorator Factory
+# -----------------------------------------
+
+@decorator_factory("Hello", "World")  # this calls the factory first
+def greet(name):
+    """Simple greeting function."""
+    return f"Hi, {name}!"
+
+# -----------------------------------------
+# 🔹 Execution
+# -----------------------------------------
+
+greet("Mohammad")
+
+# Output:
+# Decorator factory arguments: Hello, World
+# Calling greet() with args: ('Mohammad',), kwargs: {}
+# greet() returned: Hi, Mohammad!
