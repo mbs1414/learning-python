@@ -1115,3 +1115,285 @@ greet("Mohammad")
 # Decorator factory arguments: Hello, World
 # Calling greet() with args: ('Mohammad',), kwargs: {}
 # greet() returned: Hi, Mohammad!
+
+# -----------------------------------------
+# 🔹 Python open() Function
+# -----------------------------------------
+
+# Syntax:
+# open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True)
+
+# Common parameters:
+# file     → The path to the file you want to open.
+# mode     → Defines how the file is opened.
+# encoding → Specifies text encoding (like 'utf-8') when working with text files.
+
+# Common modes:
+# 'r'  → Read (default). File must exist.
+# 'w'  → Write. Creates a new file or overwrites existing one.
+# 'a'  → Append. Adds content to the end of the file.
+# 'x'  → Create. Fails if file already exists.
+# 'r+' → Read and write (must exist).
+# 'w+' → Write and read (overwrite).
+# 'a+' → Append and read.
+
+# -----------------------------------------
+# ✅ Example 1: Reading a file
+# -----------------------------------------
+
+# Suppose we have a file: "example.txt" containing:
+# Hello World!
+
+file = open("example.txt", "r", encoding="utf-8")
+content = file.read()   # Reads the entire file as a string
+print(content)          # 🔹 Output: Hello World!
+file.close()            # Always close the file when done
+
+
+# -----------------------------------------
+# ✅ Example 2: Writing to a file
+# -----------------------------------------
+
+file = open("output.txt", "w", encoding="utf-8")
+file.write("This is a new line of text.")
+file.close()
+
+# If you open the file in 'w' mode again, it will overwrite the content.
+
+
+# -----------------------------------------
+# ✅ Example 3: Appending to a file
+# -----------------------------------------
+
+file = open("output.txt", "a", encoding="utf-8")
+file.write("\nThis text was appended.")
+file.close()
+
+
+# -----------------------------------------
+# ✅ Example 4: Reading line by line
+# -----------------------------------------
+
+file = open("output.txt", "r", encoding="utf-8")
+
+for line in file:
+    print(line.strip())  # strip() removes newline characters
+
+file.close()
+
+
+# -----------------------------------------
+# ✅ Example 5: Using `with` (recommended way)
+# -----------------------------------------
+
+# 'with' automatically closes the file when the block ends
+with open("output.txt", "r", encoding="utf-8") as file:
+    data = file.read()
+    print(data)
+# File is closed automatically here
+
+
+# -----------------------------------------
+# ✅ Example 6: Read methods
+# -----------------------------------------
+
+with open("output.txt", "r", encoding="utf-8") as file:
+    print(file.read(10))      # Read first 10 characters
+    print(file.readline())    # Read one line
+    print(file.readlines())   # Read all lines into a list
+
+
+# -----------------------------------------
+# ✅ Example 7: Binary mode
+# -----------------------------------------
+
+# Use 'rb' or 'wb' for binary files (like images or videos)
+with open("image.jpg", "rb") as img_file:
+    data = img_file.read()
+    print(len(data))  # number of bytes read
+
+# -----------------------------------------
+# 🔹 with open() — Context Manager for Files
+# -----------------------------------------
+
+# The 'with' statement automatically opens and closes the file.
+# You don’t need to call file.close().
+# This is the recommended, safe way to handle files in Python.
+
+# Syntax:
+# with open(filename, mode, encoding) as variable:
+#     # work with the file
+
+# -----------------------------------------
+# ✅ Example 1: Reading a file
+# -----------------------------------------
+
+with open("example.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    print(content)
+# 🔹 File is automatically closed here
+
+# Output (if example.txt contains "Hello World!"):
+# Hello World!
+
+
+# -----------------------------------------
+# ✅ Example 2: Writing to a file
+# -----------------------------------------
+
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("This file was created using with open().")
+
+# 🔹 Automatically closed — no need for file.close()
+
+
+# -----------------------------------------
+# ✅ Example 3: Appending to a file
+# -----------------------------------------
+
+with open("output.txt", "a", encoding="utf-8") as file:
+    file.write("\nNew line added at the end.")
+
+# 🔹 'a' means "append" → keeps old data and adds new text
+
+
+# -----------------------------------------
+# ✅ Example 4: Reading line by line
+# -----------------------------------------
+
+with open("output.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        print(line.strip())  # strip() removes newline characters
+
+# 🔹 Output:
+# This file was created using with open().
+# New line added at the end.
+
+
+# -----------------------------------------
+# ✅ Example 5: Reading all lines into a list
+# -----------------------------------------
+
+with open("output.txt", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+print(lines)
+# 🔹 Output: ['This file was created using with open().\n', 'New line added at the end.']
+
+
+# -----------------------------------------
+# ✅ Example 6: Using multiple context managers
+# -----------------------------------------
+
+# You can open multiple files at once using commas
+with open("file1.txt", "r", encoding="utf-8") as f1, open("file2.txt", "w", encoding="utf-8") as f2:
+    data = f1.read()
+    f2.write(data.upper())
+
+# 🔹 Reads from file1.txt and writes uppercase version to file2.txt
+
+
+# -----------------------------------------
+# ✅ Example 7: Handling errors safely
+# -----------------------------------------
+
+try:
+    with open("not_found.txt", "r", encoding="utf-8") as file:
+        data = file.read()
+except FileNotFoundError:
+    print("⚠️ File not found!")
+
+
+# -----------------------------------------
+# 🔹 Python Requests Module
+# -----------------------------------------
+# You can install it (if not already):
+# pip install requests
+
+import requests
+
+# -----------------------------------------
+# ✅ 1. Simple GET request
+# -----------------------------------------
+
+response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+
+print(response.status_code)  # 200 → OK
+print(response.text)         # Returns raw text
+print(response.json())       # Converts JSON response to a Python dict
+
+# Output example:
+# 200
+# {"userId": 1, "id": 1, "title": "...", "body": "..."}
+
+
+# -----------------------------------------
+# ✅ 2. Sending Query Parameters
+# -----------------------------------------
+
+params = {"userId": 1}
+response = requests.get("https://jsonplaceholder.typicode.com/posts", params=params)
+print(response.url)  # Full URL with query → https://.../posts?userId=1
+print(response.json())  # List of posts for userId=1
+
+
+# -----------------------------------------
+# ✅ 3. Sending a POST request (Create data)
+# -----------------------------------------
+
+data = {"title": "New Post", "body": "Content here", "userId": 1}
+response = requests.post("https://jsonplaceholder.typicode.com/posts", json=data)
+print(response.status_code)  # 201 → Created
+print(response.json())       # Returns the created post
+
+
+# -----------------------------------------
+# ✅ 4. PUT request (Update data)
+# -----------------------------------------
+
+update_data = {"title": "Updated Title"}
+response = requests.put("https://jsonplaceholder.typicode.com/posts/1", json=update_data)
+print(response.status_code)  # 200 → OK
+print(response.json())
+
+
+# -----------------------------------------
+# ✅ 5. DELETE request
+# -----------------------------------------
+
+response = requests.delete("https://jsonplaceholder.typicode.com/posts/1")
+print(response.status_code)  # 200 or 204 → Deleted
+
+
+# -----------------------------------------
+# ✅ 6. Custom Headers
+# -----------------------------------------
+
+headers = {"Authorization": "Bearer your_token_here"}
+response = requests.get("https://jsonplaceholder.typicode.com/users", headers=headers)
+print(response.status_code)
+
+
+# -----------------------------------------
+# ✅ 7. Timeout
+# -----------------------------------------
+
+try:
+    response = requests.get("https://jsonplaceholder.typicode.com/posts", timeout=5)
+    print(response.status_code)
+except requests.Timeout:
+    print("⚠️ Request timed out!")
+
+
+# -----------------------------------------
+# ✅ 8. Error Handling (Best Practice)
+# -----------------------------------------
+
+try:
+    response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+    response.raise_for_status()  # Raises an error for bad responses (4xx/5xx)
+    print(response.json())
+except requests.exceptions.HTTPError as err:
+    print(f"HTTP Error: {err}")
+except requests.exceptions.RequestException as err:
+    print(f"Other Error: {err}")
