@@ -1397,3 +1397,309 @@ except requests.exceptions.HTTPError as err:
     print(f"HTTP Error: {err}")
 except requests.exceptions.RequestException as err:
     print(f"Other Error: {err}")
+
+
+# -----------------------------------------
+# 🔹 Working with Databases in Python (SQLite)
+# -----------------------------------------
+# SQLite is built into Python — no installation needed.
+# For other databases (MySQL, PostgreSQL, etc.), you'd use other libraries like:
+#   - mysql.connector
+#   - psycopg2
+#   - SQLAlchemy (ORM)
+# But here we'll use sqlite3 for simplicity.
+
+import sqlite3
+
+# -----------------------------------------
+# ✅ 1. Connect to a Database
+# -----------------------------------------
+
+# If the database file does not exist, it will be created automatically.
+connection = sqlite3.connect("my_database.db")
+
+# Create a cursor — used to execute SQL commands
+cursor = connection.cursor()
+
+
+# -----------------------------------------
+# ✅ 2. Create a Table
+# -----------------------------------------
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    age INTEGER
+)
+""")
+
+# Save (commit) the changes
+connection.commit()
+
+
+# -----------------------------------------
+# ✅ 3. Insert Data into the Table
+# -----------------------------------------
+
+cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", ("Mohammad", 24))
+cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", ("Ali", 30))
+
+# Commit changes
+connection.commit()
+
+
+# -----------------------------------------
+# ✅ 4. Retrieve Data
+# -----------------------------------------
+
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()  # returns a list of tuples
+print(rows)
+# Output: [(1, 'Mohammad', 24), (2, 'Ali', 30)]
+
+
+# -----------------------------------------
+# ✅ 5. Retrieve One Row
+# -----------------------------------------
+
+cursor.execute("SELECT * FROM users WHERE name = ?", ("Ali",))
+row = cursor.fetchone()
+print(row)
+# Output: (2, 'Ali', 30)
+
+
+# -----------------------------------------
+# ✅ 6. Update Data
+# -----------------------------------------
+
+cursor.execute("UPDATE users SET age = ? WHERE name = ?", (31, "Ali"))
+connection.commit()
+
+
+# -----------------------------------------
+# ✅ 7. Delete Data
+# -----------------------------------------
+
+cursor.execute("DELETE FROM users WHERE name = ?", ("Mohammad",))
+connection.commit()
+
+
+# -----------------------------------------
+# ✅ 8. Using `with` for Automatic Cleanup
+# -----------------------------------------
+
+# 'with' automatically closes the connection when done
+with sqlite3.connect("my_database.db") as conn:
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users")
+    print(cur.fetchall())
+
+
+# -----------------------------------------
+# ✅ 9. Close the Connection
+# -----------------------------------------
+
+connection.close()
+
+
+# -----------------------------------------
+# 🔹 Basic GUI with Tkinter
+# -----------------------------------------
+# Tkinter is Python’s built-in GUI library (no installation needed).
+
+import tkinter as tk
+from tkinter import messagebox
+
+# -----------------------------------------
+# ✅ 1. Create the Main Window
+# -----------------------------------------
+
+root = tk.Tk()               # Create a window
+root.title("My First GUI")   # Window title
+root.geometry("400x300")     # Width x Height
+root.resizable(False, False) # Disable resizing
+
+
+# -----------------------------------------
+# ✅ 2. Add Widgets (Labels, Entry, Buttons)
+# -----------------------------------------
+
+# Label
+label = tk.Label(root, text="Enter your name:", font=("Arial", 12))
+label.pack(pady=10)  # 'pack' positions it in the window with some padding
+
+# Text input (Entry)
+entry = tk.Entry(root, width=30)
+entry.pack(pady=5)
+
+
+# -----------------------------------------
+# ✅ 3. Add a Function (Event Handling)
+# -----------------------------------------
+
+def greet_user():
+    name = entry.get()
+    if name.strip() == "":
+        messagebox.showwarning("Warning", "Please enter your name!")
+    else:
+        messagebox.showinfo("Greeting", f"Hello, {name}!")
+
+
+# -----------------------------------------
+# ✅ 4. Add a Button
+# -----------------------------------------
+
+button = tk.Button(root, text="Greet", command=greet_user, bg="lightblue", fg="black")
+button.pack(pady=10)
+
+
+# -----------------------------------------
+# ✅ 5. Add More Widgets (Optional)
+# -----------------------------------------
+
+# Checkbox
+is_student = tk.BooleanVar()
+checkbox = tk.Checkbutton(root, text="I am a student", variable=is_student)
+checkbox.pack()
+
+# Radio Buttons
+selected_lang = tk.StringVar(value="Python")
+
+tk.Radiobutton(root, text="Python", variable=selected_lang, value="Python").pack()
+tk.Radiobutton(root, text="JavaScript", variable=selected_lang, value="JavaScript").pack()
+tk.Radiobutton(root, text="C++", variable=selected_lang, value="C++").pack()
+
+
+# -----------------------------------------
+# ✅ 6. Add a Frame (for grouping widgets)
+# -----------------------------------------
+
+frame = tk.Frame(root, bg="lightgray", bd=2, relief="groove")
+frame.pack(pady=15, fill="x", padx=20)
+
+tk.Label(frame, text="Inside Frame").pack(pady=5)
+
+
+# -----------------------------------------
+# ✅ 7. Exit Button
+# -----------------------------------------
+
+exit_btn = tk.Button(root, text="Exit", command=root.destroy, bg="red", fg="white")
+exit_btn.pack(pady=10)
+
+
+# -----------------------------------------
+# ✅ 8. Run the Main Loop
+# -----------------------------------------
+
+root.mainloop()
+# The main loop keeps the window open until the user closes it.
+
+# -----------------------------------------
+# 🔹 StringVar() in Tkinter
+# -----------------------------------------
+# StringVar is a special Tkinter variable class.
+# It creates a variable that can be shared between widgets and code.
+# When it changes, widgets update automatically (two-way binding).
+
+import tkinter as tk
+
+root = tk.Tk()
+root.title("StringVar Example")
+root.geometry("400x250")
+
+# -----------------------------------------
+# ✅ 1. Create a StringVar()
+# -----------------------------------------
+
+name_var = tk.StringVar()     # Holds a string value
+name_var.set("Default Name")  # Set initial value
+
+# -----------------------------------------
+# ✅ 2. Use StringVar with Entry
+# -----------------------------------------
+
+entry = tk.Entry(root, textvariable=name_var, width=30)
+entry.pack(pady=10)
+
+# -----------------------------------------
+# ✅ 3. Use StringVar with Label
+# -----------------------------------------
+
+label = tk.Label(root, textvariable=name_var, font=("Arial", 14))
+label.pack(pady=10)
+# 🔹 The Label will automatically show whatever is in name_var
+
+# -----------------------------------------
+# ✅ 4. Function to Update Value
+# -----------------------------------------
+
+def change_name():
+    name_var.set("Mohammad Babakhani")  # Updates StringVar
+    print("Entry Value:", name_var.get())  # .get() retrieves the current value
+
+button = tk.Button(root, text="Change Name", command=change_name)
+button.pack(pady=10)
+
+# -----------------------------------------
+# ✅ 5. Trace (Callback on Value Change)
+# -----------------------------------------
+
+def on_change(*args):
+    print("StringVar changed to:", name_var.get())
+
+# Whenever name_var changes, this function runs automatically
+name_var.trace_add("write", on_change)
+
+root.mainloop()
+
+# -----------------------------------------
+# 🔹 Tkinter Input Fields Example
+# -----------------------------------------
+import tkinter as tk
+
+root = tk.Tk()
+root.title("Tkinter Inputs Example")
+root.geometry("400x300")
+
+# -----------------------------------------
+# ✅ 1. Create variables for inputs
+# -----------------------------------------
+name_var = tk.StringVar()
+age_var = tk.StringVar()
+
+# -----------------------------------------
+# ✅ 2. Create Entry widgets (text input fields)
+# -----------------------------------------
+tk.Label(root, text="Enter your name:").pack(pady=5)
+name_entry = tk.Entry(root, textvariable=name_var)
+name_entry.pack(pady=5)
+
+tk.Label(root, text="Enter your age:").pack(pady=5)
+age_entry = tk.Entry(root, textvariable=age_var)
+age_entry.pack(pady=5)
+
+# -----------------------------------------
+# ✅ 3. Create a function to read input values
+# -----------------------------------------
+def submit():
+    name = name_var.get()
+    age = age_var.get()
+    print("Name:", name)
+    print("Age:", age)
+    output_label.config(text=f"Hello {name}, you are {age} years old!")
+
+# -----------------------------------------
+# ✅ 4. Button to trigger input reading
+# -----------------------------------------
+submit_btn = tk.Button(root, text="Submit", command=submit)
+submit_btn.pack(pady=10)
+
+# -----------------------------------------
+# ✅ 5. Label to show result
+# -----------------------------------------
+output_label = tk.Label(root, text="", font=("Arial", 12))
+output_label.pack(pady=10)
+
+root.mainloop()
